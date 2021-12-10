@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cyg.newbee_mall.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.cyg.newbee_mall.pojo.User">
+        <result column="user_id" property="userId" jdbcType="BIGINT"/>
+        <result column="nick_name" property="nickName" jdbcType="VARCHAR"/>
+        <result column="login_name" jdbcType="VARCHAR" property="loginName"/>
+        <result column="introduce_sign" property="introduceSign" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="TINYINT"/>
+        <result column="locked_flag" property="lockedFlag" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        user_id
+        , nick_name, login_name, password_md5, introduce_sign, address, is_deleted,
+    locked_flag, create_time
+    </sql>
+    <select id="findUsers" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_user
+    </select>
+</mapper>
