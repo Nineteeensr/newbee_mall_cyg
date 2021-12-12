@@ -63,10 +63,6 @@ public class NewBeeMallCarouselServiceImpl implements NewBeeMallCarouselService 
     public Boolean deleteBatch(List<Integer> ids) {
         CarouselExample example = new CarouselExample();
         example.createCriteria().andCarouselIdIn(ids);
-        int i = carouselMapper.deleteByExample(example);
-        if (i > 0) {
-            return true;
-        }
-        return false;
+        return carouselMapper.deleteByExample(example) > 0;
     }
 }

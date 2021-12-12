@@ -3,9 +3,9 @@
 <header th:replace="admin/header::header-fragment"></header>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
-    <!-- 引入页面头 header-fragment -->
+    <!-- 引入页面头header-fragment -->
     <div th:replace="admin/header::header-nav"></div>
-    <!-- 引入工具栏 sidebar-fragment -->
+    <!-- 引入工具栏sidebar-fragment -->
     <div th:replace="admin/sidebar::sidebar-fragment(${path})"></div>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -21,8 +21,10 @@
                     <h3 class="card-title">首页</h3>
                 </div> <!-- /.card-body -->
                 <div class="card-body">
-                    <div style="padding: 10px 0 20px 10px;">
-                        页面布局制作及跳转逻辑实现
+                    <div class="panel panel-default">
+                        <div style="padding: 10px 0 20px 10px;">
+
+                        </div>
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
@@ -35,8 +37,6 @@
 </div>
 <!-- jQuery -->
 <script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
-<!-- jQuery UI 1.11.4 -->
-<script th:src="@{/admin/plugins/jQueryUI/jquery-ui.min.js}"></script>
 <!-- Bootstrap 4 -->
 <script th:src="@{/admin/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
 <!-- AdminLTE App -->
