@@ -101,7 +101,7 @@ public class NewBeeMallCarouselController {
         return ResultGenerator.genSuccessResult(carousel);
     }
 
-    @PostMapping("/carousels")
+    @PostMapping("/carousels/delete")
     @ResponseBody
     public Result delete(@RequestBody List<Integer> ids) {
         if (ids.size() < 1) {

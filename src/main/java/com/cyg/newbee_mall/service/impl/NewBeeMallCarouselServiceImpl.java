@@ -32,7 +32,7 @@ public class NewBeeMallCarouselServiceImpl implements NewBeeMallCarouselService 
 
     @Override
     public String saveCarousel(Carousel carousel) {
-        if (carouselMapper.insert(carousel) > 0) {
+        if (carouselMapper.insertSelective(carousel) > 0) {
             return ServiceResultEnum.SUCCESS.getResult();
         }
         return ServiceResultEnum.DB_ERROR.getResult();

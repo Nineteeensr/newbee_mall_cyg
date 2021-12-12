@@ -20,7 +20,7 @@ import java.io.IOException;
 @Controller
 public class KaptchaController {
 
-    @GetMapping("/kaptcha")
+    @GetMapping("/common/kaptcha")
     public void defaultKaptcha(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
         response.setHeader("Cache-Control", "no-store");
         response.setHeader("Pragma", "no-cache");
