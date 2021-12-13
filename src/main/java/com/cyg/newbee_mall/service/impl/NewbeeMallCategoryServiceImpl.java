@@ -7,6 +7,7 @@ import com.cyg.newbee_mall.pojo.GoodsCateforyExample;
 import com.cyg.newbee_mall.service.NewbeeMallCategoryService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
  * @author CuiYuangeng
  * @create 2021-12-13-7:37
  */
+@Service
 public class NewbeeMallCategoryServiceImpl implements NewbeeMallCategoryService {
     @Resource
     private GoodsCateforyMapper goodsCateforyMapper;
@@ -28,20 +30,19 @@ public class NewbeeMallCategoryServiceImpl implements NewbeeMallCategoryService 
      * @return
      */
     @Override
-    public PageInfo<GoodsCatefory> selectAllLimit(Byte categoryLevel, Long categoryId, Long parentId
-            , Integer pageNum, Integer pageSize) {
+    public PageInfo<GoodsCatefory> selectAllLimit(Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         GoodsCateforyExample example = new GoodsCateforyExample();
         GoodsCateforyExample.Criteria criteria = example.createCriteria();
-        if (categoryLevel != 0) {
-            criteria.andCategoryLevelEqualTo(categoryLevel);
-        }
-        if (categoryId != 0) {
-            criteria.andCategoryIdEqualTo(categoryId);
-        }
-        if (parentId != 0) {
-            criteria.andParentIdEqualTo(parentId);
-        }
+        //if (categoryLevel != 0) {
+        //    criteria.andCategoryLevelEqualTo(categoryLevel);
+        //}
+        //if (categoryId != 0) {
+        //    criteria.andCategoryIdEqualTo(categoryId);
+        //}
+        //if (parentId != 0) {
+        //    criteria.andParentIdEqualTo(parentId);
+        //}
         List<GoodsCatefory> goodsCatefories = goodsCateforyMapper.selectByExample(example);
         PageInfo<GoodsCatefory> pageInfo = new PageInfo<>(goodsCatefories);
 
