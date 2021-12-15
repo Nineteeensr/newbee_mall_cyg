@@ -10,6 +10,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,25 +25,12 @@ public class NewbeeMallCategoryServiceImpl implements NewbeeMallCategoryService 
     /**
      * 分页查询后台 分类 管理数据
      *
-     * @param categoryLevel
-     * @param categoryId
-     * @param parentId
      * @return
      */
     @Override
     public PageInfo<GoodsCatefory> selectAllLimit(Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         GoodsCateforyExample example = new GoodsCateforyExample();
-        GoodsCateforyExample.Criteria criteria = example.createCriteria();
-        //if (categoryLevel != 0) {
-        //    criteria.andCategoryLevelEqualTo(categoryLevel);
-        //}
-        //if (categoryId != 0) {
-        //    criteria.andCategoryIdEqualTo(categoryId);
-        //}
-        //if (parentId != 0) {
-        //    criteria.andParentIdEqualTo(parentId);
-        //}
         List<GoodsCatefory> goodsCatefories = goodsCateforyMapper.selectByExample(example);
         PageInfo<GoodsCatefory> pageInfo = new PageInfo<>(goodsCatefories);
 
@@ -73,23 +61,30 @@ public class NewbeeMallCategoryServiceImpl implements NewbeeMallCategoryService 
     /**
      * 修改一条数据
      *
-     * @param goodsCatefory
      * @return
      */
     @Override
-    public String updateGoodsCategory(GoodsCatefory goodsCatefory) {
-        GoodsCatefory temp = goodsCateforyMapper.selectByPrimaryKey(goodsCatefory.getCategoryId());
+    public String updateGoodsCategory(GoodsCatefory goodsCategory) {
+        GoodsCatefory temp = goodsCateforyMapper.selectByPrimaryKey(goodsCategory.getCategoryId());
         if (temp == null) {
             return ServiceResultEnum.DATA_NOT_EXIST.getResult();
         }
         GoodsCateforyExample example = new GoodsCateforyExample();
-        example.createCriteria().andCategoryLevelEqualTo(goodsCatefory.getCategoryLevel())
-                .andCategoryNameEqualTo(goodsCatefory.getCategoryName());
-        List<GoodsCatefory> temp2 = goodsCateforyMapper.selectByExample(example);
-        if (temp2 != null && temp2.get(0).getCategoryId().equals(goodsCatefory.getCategoryId())) {
-
+        example.createCriteria().andCategoryLevelEqualTo(goodsCategory.getCategoryLevel()).andCategoryNameEqualTo(goodsCategory.getCategoryName());
+        List<GoodsCatefory> goodsCatefories = goodsCateforyMapper.selectByExample(example);
+        GoodsCatefory temp2 = null;
+        if (goodsCatefories.size() > 0 && goodsCatefories != null) {
+            temp2 = goodsCatefories.get(0);
         }
-        return null;
+        if (temp2 != null && !temp2.getCategoryId().equals(goodsCategory.getCategoryId())) {
+            //同名且不同id 不能继续修改
+            return ServiceResultEnum.SAME_CATEGORY_EXIST.getResult();
+        }
+        goodsCategory.setUpdateTime(new Date());
+        if (goodsCateforyMapper.updateByPrimaryKeySelective(goodsCategory) > 0) {
+            return ServiceResultEnum.SUCCESS.getResult();
+        }
+        return ServiceResultEnum.DB_ERROR.getResult();
     }
 
     /**
@@ -100,7 +95,7 @@ public class NewbeeMallCategoryServiceImpl implements NewbeeMallCategoryService 
      */
     @Override
     public GoodsCatefory getGoodsCategory(Long categoryId) {
-        return null;
+        return goodsCateforyMapper.selectByPrimaryKey(categoryId);
     }
 
     /**
@@ -110,7 +105,25 @@ public class NewbeeMallCategoryServiceImpl implements NewbeeMallCategoryService 
      * @return
      */
     @Override
-    public Boolean deleteBatch(List<Integer> ids) {
-        return null;
+    public Boolean deleteBatch(List<Long> ids) {
+        GoodsCateforyExample example = new GoodsCateforyExample();
+        example.createCriteria().andCategoryIdIn(ids);
+        return goodsCateforyMapper.deleteByExample(example) > 0;
     }
+
+    /**
+     * 根据parentId和Level查询列表
+     *
+     * @param parentIds
+     * @param categoryLevel
+     * @return
+     */
+    @Override
+    public List<GoodsCatefory> selectByLevelAndParentIdsAndNumber(List<Long> parentIds, Byte categoryLevel) {
+        GoodsCateforyExample example = new GoodsCateforyExample();
+        example.createCriteria().andParentIdIn(parentIds).andCategoryLevelEqualTo(categoryLevel);
+        List<GoodsCatefory> goodsCatefories = goodsCateforyMapper.selectByExample(example);
+        return goodsCatefories;
+    }
+
 }

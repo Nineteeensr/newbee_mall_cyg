@@ -16,7 +16,26 @@ public interface NewbeeMallCategoryService {
 
     String updateGoodsCategory(GoodsCatefory goodsCatefory);
 
+    /**
+     * @param categoryId
+     * @return
+     */
     GoodsCatefory getGoodsCategory(Long categoryId);
 
-    Boolean deleteBatch(List<Integer> ids);
+    /**
+     * 删除
+     *
+     * @param ids
+     * @return
+     */
+    Boolean deleteBatch(List<Long> ids);
+
+    /**
+     * 根据parentId categoryLevel 查询分类列表
+     *
+     * @param parentIds
+     * @param categoryLevel
+     * @return
+     */
+    List<GoodsCatefory> selectByLevelAndParentIdsAndNumber(List<Long> parentIds, Byte categoryLevel);
 }
