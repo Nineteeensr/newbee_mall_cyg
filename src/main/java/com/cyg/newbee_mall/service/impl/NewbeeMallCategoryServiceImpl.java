@@ -28,9 +28,16 @@ public class NewbeeMallCategoryServiceImpl implements NewbeeMallCategoryService 
      * @return
      */
     @Override
-    public PageInfo<GoodsCatefory> selectAllLimit(Integer pageNum, Integer pageSize) {
+    public PageInfo<GoodsCatefory> selectAllLimit(Integer pageNum, Integer pageSize, Byte categoryLevel, Long parentId) {
+        System.out.println("pageNum = " + pageNum);
+        System.out.println("pageSize = " + pageSize);
+        System.out.println("categoryLevel = " + categoryLevel);
+        System.out.println("parentId = " + parentId);
         PageHelper.startPage(pageNum, pageSize);
         GoodsCateforyExample example = new GoodsCateforyExample();
+        example.setOrderByClause("category_rank desc");
+
+        example.createCriteria().andCategoryLevelEqualTo(categoryLevel).andParentIdEqualTo(parentId);
         List<GoodsCatefory> goodsCatefories = goodsCateforyMapper.selectByExample(example);
         PageInfo<GoodsCatefory> pageInfo = new PageInfo<>(goodsCatefories);
 

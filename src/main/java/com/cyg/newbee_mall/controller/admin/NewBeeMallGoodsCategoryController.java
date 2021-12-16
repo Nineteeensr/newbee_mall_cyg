@@ -59,8 +59,10 @@ public class NewBeeMallGoodsCategoryController {
     @GetMapping("/categories/list")
     @ResponseBody
     public Result list(@RequestParam(value = "page") Integer page
-            , @RequestParam(value = "limit") Integer limit) {
-        PageInfo<GoodsCatefory> pageInfo = newbeeMallCategoryService.selectAllLimit(page, limit);
+            , @RequestParam(value = "limit") Integer limit
+            , @RequestParam(value = "categoryLevel", defaultValue = "1") Byte categoryLevel
+            , @RequestParam(value = "parentId", defaultValue = "0") Long parentId) {
+        PageInfo<GoodsCatefory> pageInfo = newbeeMallCategoryService.selectAllLimit(page, limit, categoryLevel, parentId);
         return ResultGenerator.genSuccessResult(pageInfo);
     }
 

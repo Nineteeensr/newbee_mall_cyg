@@ -10,7 +10,7 @@ import java.util.List;
  * @create 2021-12-13-7:25
  */
 public interface NewbeeMallCategoryService {
-    PageInfo<GoodsCatefory> selectAllLimit(Integer pageNum, Integer pageSize);
+    PageInfo<GoodsCatefory> selectAllLimit(Integer pageNum, Integer pageSize, Byte categoryLevel, Long parentId);
 
     String saveCategory(GoodsCatefory goodsCatefory);
 

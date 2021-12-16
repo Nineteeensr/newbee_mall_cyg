@@ -1,5 +1,7 @@
 package com.cyg.newbee_mall.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class IndexConfig {
@@ -65,6 +67,7 @@ public class IndexConfig {
      *
      * @mbggenerated Thu Dec 09 19:17:31 CST 2021
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
     /**
@@ -81,6 +84,7 @@ public class IndexConfig {
      *
      * @mbggenerated Thu Dec 09 19:17:31 CST 2021
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
 
     /**
