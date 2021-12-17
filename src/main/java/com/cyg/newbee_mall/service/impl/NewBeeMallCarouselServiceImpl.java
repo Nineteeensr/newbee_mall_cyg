@@ -5,6 +5,7 @@ import com.cyg.newbee_mall.mapper.CarouselMapper;
 import com.cyg.newbee_mall.pojo.Carousel;
 import com.cyg.newbee_mall.pojo.CarouselExample;
 import com.cyg.newbee_mall.service.NewBeeMallCarouselService;
+import com.cyg.newbee_mall.util.PageQueryUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author CuiYuangeng
@@ -23,8 +25,8 @@ public class NewBeeMallCarouselServiceImpl implements NewBeeMallCarouselService 
     private CarouselMapper carouselMapper;
 
     @Override
-    public PageInfo<Carousel> selectCarousel(Integer pageNum, Integer pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
+    public PageInfo<Carousel> selectCarousel(PageQueryUtil pageQueryUtil, Map<String, Object> params) {
+        PageHelper.startPage(pageQueryUtil.getPage(), pageQueryUtil.getLimit());
         List<Carousel> carousels = carouselMapper.selectByExample(null);
         PageInfo<Carousel> pageInfo = new PageInfo<>(carousels);
         return pageInfo;

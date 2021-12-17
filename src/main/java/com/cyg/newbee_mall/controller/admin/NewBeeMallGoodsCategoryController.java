@@ -65,6 +65,11 @@ public class NewBeeMallGoodsCategoryController {
         PageInfo<GoodsCatefory> pageInfo = newbeeMallCategoryService.selectAllLimit(page, limit, categoryLevel, parentId);
         return ResultGenerator.genSuccessResult(pageInfo);
     }
+    /*public Result list(@RequestParam Map<String,Object> params){
+        PageQueryUtil pageQueryUtil = new PageQueryUtil(params);
+        PageInfo<GoodsCatefory> pageInfo = newbeeMallCategoryService.selectAllLimit(pageQueryUtil, params);
+        return ResultGenerator.genSuccessResult(pageInfo);
+    }*/
 
     @GetMapping("/categories/listForSelect")
     @ResponseBody

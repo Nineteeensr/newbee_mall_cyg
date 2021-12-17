@@ -40,18 +40,18 @@ public class NewBeeMallGoodsIndexConfigController {
     /**
      * 分页列表
      *
-     * @param pageNum
-     * @param pageSize
+     * @param page
+     * @param limit
      * @param configType
      * @return
      */
     @GetMapping("/indexConfigs/list")
     @ResponseBody
     public Result list(
-            @RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer pageNum
-            , @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize
+            @RequestParam(value = "page") Integer page
+            , @RequestParam(value = "limit") Integer limit
             , @RequestParam(value = "configType") Byte configType) {
-        PageInfo<IndexConfig> pageInfo = indexConfigService.getConfigPage(pageNum, pageSize, configType);
+        PageInfo<IndexConfig> pageInfo = indexConfigService.getConfigPage(page, limit, configType);
         return ResultGenerator.genSuccessResult(pageInfo);
     }
 

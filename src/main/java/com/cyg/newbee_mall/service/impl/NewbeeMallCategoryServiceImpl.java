@@ -5,6 +5,7 @@ import com.cyg.newbee_mall.mapper.GoodsCateforyMapper;
 import com.cyg.newbee_mall.pojo.GoodsCatefory;
 import com.cyg.newbee_mall.pojo.GoodsCateforyExample;
 import com.cyg.newbee_mall.service.NewbeeMallCategoryService;
+import com.cyg.newbee_mall.util.PageQueryUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author CuiYuangeng
@@ -41,6 +43,18 @@ public class NewbeeMallCategoryServiceImpl implements NewbeeMallCategoryService 
         List<GoodsCatefory> goodsCatefories = goodsCateforyMapper.selectByExample(example);
         PageInfo<GoodsCatefory> pageInfo = new PageInfo<>(goodsCatefories);
 
+        return pageInfo;
+    }
+
+    @Override
+    public PageInfo<GoodsCatefory> selectAllLimit(PageQueryUtil pageQueryUtil, Map<String, Object> params) {
+        PageHelper.startPage(pageQueryUtil.getPage(), pageQueryUtil.getLimit());
+        Long parentId = Long.parseLong(params.get("parentId").toString());
+        Byte categoryLevel = Byte.parseByte(params.get("categoryLevel").toString());
+        GoodsCateforyExample example = new GoodsCateforyExample();
+        example.createCriteria().andCategoryLevelEqualTo(categoryLevel).andParentIdEqualTo(parentId);
+        List<GoodsCatefory> goodsCatefories = goodsCateforyMapper.selectByExample(example);
+        PageInfo<GoodsCatefory> pageInfo = new PageInfo<>(goodsCatefories);
         return pageInfo;
     }
 

@@ -3,6 +3,7 @@ package com.cyg.newbee_mall.controller.admin;
 import com.cyg.newbee_mall.common.ServiceResultEnum;
 import com.cyg.newbee_mall.pojo.Carousel;
 import com.cyg.newbee_mall.service.NewBeeMallCarouselService;
+import com.cyg.newbee_mall.util.PageQueryUtil;
 import com.cyg.newbee_mall.util.Result;
 import com.cyg.newbee_mall.util.ResultGenerator;
 import com.github.pagehelper.PageInfo;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -34,17 +36,17 @@ public class NewBeeMallCarouselController {
     /**
      * 列表
      *
-     * @param pageNum
-     * @param pageSize
+     * @param
+     * @param
      * @return
      */
     @GetMapping("/carousels/list")
     @ResponseBody
     public Result list(
-            @RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer pageNum
-            , @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize
+            @RequestParam Map<String, Object> params
     ) {
-        PageInfo<Carousel> pageInfo = newBeeMallCarouselService.selectCarousel(pageNum, pageSize);
+        PageQueryUtil pageQueryUtil = new PageQueryUtil(params);
+        PageInfo<Carousel> pageInfo = newBeeMallCarouselService.selectCarousel(pageQueryUtil, params);
         return ResultGenerator.genSuccessResult(pageInfo);
     }
 
